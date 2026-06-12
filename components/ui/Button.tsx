@@ -11,45 +11,34 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   rel?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  variant = 'primary', 
-  icon: Icon, 
-  children, 
+const Button: React.FC<ButtonProps> = ({
+  variant = 'primary',
+  icon: Icon,
+  children,
   className = '',
   href,
-  ...props 
+  ...props
 }) => {
-  const baseStyles = "relative group px-6 py-3 font-orbitron font-bold text-sm tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 clip-path-slant focus:outline-none inline-flex text-decoration-none cursor-pointer";
-  
-  const variants = {
-    primary: "bg-brand-magenta text-white hover:bg-brand-magentaHover hover:shadow-[0_0_20px_rgba(255,46,99,0.5)] border border-brand-magenta",
-    outline: "bg-transparent border border-white text-white hover:bg-white hover:text-brand-black",
-    ghost: "bg-transparent text-brand-gray hover:text-brand-magenta"
-  };
+  const baseStyles = "relative inline-flex items-center justify-center gap-2 px-6 py-3 font-sans text-sm font-medium tracking-wide transition-all duration-300 cursor-pointer rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70";
 
-  // Slanted effect utilizing skew transform instead of clip-path for better border rendering
-  const skewStyle = "transform -skew-x-12";
-  const unskewStyle = "transform skew-x-12";
+  const variants = {
+    primary: "bg-[var(--accent)] text-void hover:bg-gold-bright",
+    outline: "border border-gold/40 text-ink hover:border-[var(--accent)] hover:text-[var(--accent)] bg-transparent",
+    ghost: "bg-transparent text-ink-dim hover:text-[var(--accent)]",
+  };
 
   const Content = () => (
     <>
-      <span className={unskewStyle + " flex items-center gap-2"}>
-        {Icon && <Icon size={18} />}
-        {children}
-      </span>
-      
-      {/* Decorative corner accent for outline variant */}
-      {variant === 'outline' && (
-        <span className="absolute -bottom-1 -right-1 w-2 h-2 bg-brand-magenta" />
-      )}
+      {Icon && <Icon size={18} />}
+      {children}
     </>
   );
 
   if (href) {
     return (
-      <a 
+      <a
         href={href}
-        className={`${baseStyles} ${variants[variant]} ${skewStyle} ${className}`}
+        className={`${baseStyles} ${variants[variant]} ${className}`}
         {...(props as unknown as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         <Content />
@@ -58,8 +47,8 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button 
-      className={`${baseStyles} ${variants[variant]} ${skewStyle} ${className}`}
+    <button
+      className={`${baseStyles} ${variants[variant]} ${className}`}
       {...props}
     >
       <Content />
