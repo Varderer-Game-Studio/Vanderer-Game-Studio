@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-ink-dim hover:text-ink transition-colors p-2 relative z-50"
+          className="md:hidden text-ink-dim hover:text-ink transition-colors p-2 relative z-60"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle navigation menu"
         >
@@ -91,19 +91,18 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Fullscreen Overlay */}
       <div
-        className={`fixed inset-0 bg-deep/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-10 transition-all duration-500 ${
+        className={`fixed inset-0 bg-deep/98 backdrop-blur-xl z-50 flex flex-col items-center justify-center gap-10 transition-all duration-500 ${
           isMobileMenuOpen
             ? 'opacity-100 visible pointer-events-auto'
             : 'opacity-0 invisible pointer-events-none'
         }`}
       >
         <div className="flex flex-col items-center gap-8">
-          {navLinks.map((link, idx) => (
+          {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               className="font-display text-3xl font-black text-ink hover:text-gold transition-colors duration-200"
-              style={{ transitionDelay: `${idx * 60}ms` }}
               onClick={closeMobileMenu}
             >
               {link.label}
