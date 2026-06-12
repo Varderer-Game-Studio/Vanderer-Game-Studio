@@ -1,0 +1,21 @@
+@import '@fontsource/fraunces/400.css';
+@import '@fontsource/fraunces/600.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #E8C36B; /* live per-game accent; updated by ThemeProvider */
+}
+html { scroll-behavior: smooth; }
+body { @apply bg-void text-ink font-sans antialiased; overflow-x: hidden; }
+::selection { background: var(--accent); color: #05060a; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #05060a; }
+::-webkit-scrollbar-thumb { background: #2a2f40; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+.accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
