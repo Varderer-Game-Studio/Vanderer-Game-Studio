@@ -3,16 +3,16 @@ import { Github, Youtube, Mail, Facebook } from 'lucide-react';
 
 // Custom Icon for X (formerly Twitter)
 const XIcon: React.FC<{ size?: number; className?: string }> = ({ size = 18, className }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
@@ -22,16 +22,16 @@ const XIcon: React.FC<{ size?: number; className?: string }> = ({ size = 18, cla
 
 // Custom Icon for TikTok
 const TikTokIcon: React.FC<{ size?: number; className?: string }> = ({ size = 18, className }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
@@ -48,62 +48,64 @@ const Footer: React.FC = () => {
     { Icon: TikTokIcon, href: "https://tiktok.com/@varderer", label: "TikTok" },
   ];
 
-  return (
-    <footer id="contact" className="bg-brand-dark text-white pt-20 pb-12 border-t-4 border-brand-magenta relative overflow-hidden">
-      {/* Geometric Shape for Footer Top */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-4 bg-brand-magenta clip-path-trapezoid"></div>
+  const navLinks = [
+    { label: "Games", href: "#games" },
+    { label: "Studio", href: "#studio" },
+    { label: "Team", href: "#team" },
+    { label: "Contact", href: "#contact" },
+  ];
 
+  return (
+    <footer id="site-footer" className="bg-deep border-t border-gold/10 pt-16 pb-10">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          <div className="col-span-1 md:col-span-2">
-            <h3 className="font-orbitron font-black text-3xl mb-4 uppercase">VARDERER</h3>
-            <p className="text-brand-gray font-inter max-w-sm leading-relaxed mb-6">
-              Forging worlds from code and chaos. Join us as we explore the boundaries of interactive storytelling.
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-12">
+          {/* Left / brand section */}
+          <div className="flex flex-col gap-5">
+            <span className="font-display text-3xl font-black text-ink tracking-tight">
+              VARDERER
+            </span>
+            <p className="font-sans text-sm text-ink-dim leading-relaxed max-w-xs">
+              Varderer Game Studio — a union of variables. Thailand, est. 2023.
             </p>
-            <div className="flex gap-4 flex-wrap">
+            {/* Social icon row */}
+            <div className="flex gap-3 flex-wrap">
               {socialLinks.map(({ Icon, href, label }, i) => (
-                <a 
-                  key={i} 
-                  href={href} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  key={i}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-10 h-10 border border-white/20 flex items-center justify-center hover:bg-brand-magenta hover:border-brand-magenta transition-all duration-300 group"
+                  className="w-10 h-10 flex items-center justify-center border border-gold/15 text-ink-dim hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors duration-200"
                 >
-                  <Icon size={18} className="text-brand-gray group-hover:text-white" />
+                  <Icon size={18} />
                 </a>
               ))}
             </div>
           </div>
 
-          <div>
-            <h4 className="font-rajdhani font-bold text-xl mb-6 uppercase tracking-wider text-brand-magenta">Studio</h4>
-            <ul className="space-y-3 font-inter text-sm text-brand-gray">
-              <li><a href="#games" className="hover:text-white transition-colors">Games</a></li>
-              <li><a href="#team" className="hover:text-white transition-colors">The Team</a></li>
-              <li><a href="#about" className="hover:text-white transition-colors">Press Kit</a></li>
-              <li><a href="#careers" className="hover:text-white transition-colors">Careers</a></li>
+          {/* Nav column */}
+          <nav aria-label="Footer navigation">
+            <ul className="flex flex-col gap-3">
+              {navLinks.map(({ label, href }) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className="font-sans text-sm text-ink-dim hover:text-ink transition-colors duration-200"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
             </ul>
-          </div>
-
-          <div>
-            <h4 className="font-rajdhani font-bold text-xl mb-6 uppercase tracking-wider text-brand-magenta">Legal</h4>
-            <ul className="space-y-3 font-inter text-sm text-brand-gray">
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cookie Policy</a></li>
-            </ul>
-          </div>
+          </nav>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-brand-gray text-xs font-mono">
-            © {new Date().getFullYear()} VARDERER STUDIOS. ALL RIGHTS RESERVED.
+        {/* Bottom row */}
+        <div className="border-t border-gold/10 pt-6">
+          <p className="font-sans text-xs text-ink-dim">
+            © 2026 Varderer Game Studio · Thailand
           </p>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-brand-gray text-xs font-mono uppercase">Servers Online</span>
-          </div>
         </div>
       </div>
     </footer>
