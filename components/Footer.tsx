@@ -39,13 +39,13 @@ const TikTokIcon: React.FC<{ size?: number; className?: string }> = ({ size = 18
 );
 
 const Footer: React.FC = () => {
-  const socialLinks = [
-    { Icon: XIcon, href: "https://x.com", label: "X" },
-    { Icon: Github, href: "https://github.com/Vanderer-Game-Studio", label: "GitHub" },
-    { Icon: Youtube, href: "https://www.youtube.com/channel/UCNd2Gp4cHGh0F75MpW-kbnA", label: "YouTube" },
-    { Icon: Mail, href: "mailto:vardererstudio@gmail.com", label: "Email" },
-    { Icon: Facebook, href: "https://www.facebook.com/VardererGameStudio", label: "Facebook" },
-    { Icon: TikTokIcon, href: "https://tiktok.com/@varderer", label: "TikTok" },
+  const socialLinks: { Icon: React.FC<{ size?: number; className?: string }>; href: string; label: string; external?: boolean }[] = [
+    { Icon: XIcon, href: "https://x.com", label: "X", external: true },
+    { Icon: Github, href: "https://github.com/Vanderer-Game-Studio", label: "GitHub", external: true },
+    { Icon: Youtube, href: "https://www.youtube.com/channel/UCNd2Gp4cHGh0F75MpW-kbnA", label: "YouTube", external: true },
+    { Icon: Mail, href: "mailto:vardererstudio@gmail.com", label: "Email", external: false },
+    { Icon: Facebook, href: "https://www.facebook.com/VardererGameStudio", label: "Facebook", external: true },
+    { Icon: TikTokIcon, href: "https://tiktok.com/@varderer", label: "TikTok", external: true },
   ];
 
   const navLinks = [
@@ -69,12 +69,11 @@ const Footer: React.FC = () => {
             </p>
             {/* Social icon row */}
             <div className="flex gap-3 flex-wrap">
-              {socialLinks.map(({ Icon, href, label }, i) => (
+              {socialLinks.map(({ Icon, href, label, external }, i) => (
                 <a
                   key={i}
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(external !== false && { target: '_blank', rel: 'noopener noreferrer' })}
                   aria-label={label}
                   className="w-10 h-10 flex items-center justify-center border border-gold/15 text-ink-dim hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors duration-200"
                 >
@@ -104,7 +103,7 @@ const Footer: React.FC = () => {
         {/* Bottom row */}
         <div className="border-t border-gold/10 pt-6">
           <p className="font-sans text-xs text-ink-dim">
-            © 2026 Varderer Game Studio · Thailand
+            © {new Date().getFullYear()} Varderer Game Studio · Thailand
           </p>
         </div>
       </div>
