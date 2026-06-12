@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Gamepad2 } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import Button from './ui/Button';
+
+const navLinks = [
+  { label: 'Games', href: '#games' },
+  { label: 'Studio', href: '#studio' },
+  { label: 'Team', href: '#team' },
+];
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,41 +20,43 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isMobileMenuOpen]);
 
-  const navLinks = [
-    { label: 'Games', href: '#games' },
-    { label: 'Team', href: '#team' },
-    { label: 'About', href: '#about' },
-    { label: 'Careers', href: '#contact' },
-  ];
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 border-b ${
-        isScrolled 
-          ? 'bg-brand-black/95 backdrop-blur-md border-brand-dark py-4' 
-          : 'bg-transparent border-transparent py-6'
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-deep/80 backdrop-blur-md border-b border-gold/10'
+          : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <div className="container mx-auto px-6 flex justify-between items-center relative z-50">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-brand-magenta flex items-center justify-center transform -skew-x-12 group-hover:rotate-180 transition-transform duration-500">
-            <Gamepad2 className="text-white transform skew-x-12" size={24} />
+      <div className="max-w-content mx-auto px-6 flex items-center justify-between h-16">
+
+        {/* Wordmark */}
+        <a href="#" className="flex items-center gap-3 group shrink-0">
+          {/* Gold "V" mark */}
+          <div className="w-9 h-9 flex items-center justify-center">
+            <span className="font-display text-gold text-3xl font-black leading-none select-none">
+              V
+            </span>
           </div>
-          <div className="flex flex-col">
-            <span className="font-orbitron font-black text-2xl tracking-tighter leading-none">
+          {/* Brand text */}
+          <div className="flex flex-col leading-none">
+            <span className="font-display font-black text-xl tracking-tight text-ink">
               VARDERER
             </span>
-            <span className="text-[10px] font-rajdhani tracking-[0.3em] text-brand-magenta uppercase">
+            <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-gold">
               Variable Wanderers
             </span>
           </div>
@@ -56,51 +65,55 @@ const Navbar: React.FC = () => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a 
-              key={link.label} 
+            <a
+              key={link.label}
               href={link.href}
-              className="font-rajdhani font-bold text-lg text-brand-gray hover:text-white hover:tracking-widest transition-all duration-300 relative overflow-hidden"
+              className="font-sans text-sm text-ink-dim hover:text-ink transition-colors duration-200 relative group"
             >
-              <span className="relative z-10">{link.label}</span>
+              {link.label}
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-gold transition-all duration-200 group-hover:w-full" />
             </a>
           ))}
-          <a href="#contact" className="bg-white text-brand-black px-5 py-2 font-orbitron font-bold text-xs uppercase tracking-wide hover:bg-brand-magenta hover:text-white transition-colors duration-300 skew-x-[-12deg]">
-            <span className="block skew-x-[12deg]">Status: Online</span>
-          </a>
+          <Button href="#contact" variant="primary">
+            Contact
+          </Button>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white relative z-50 p-2"
+        <button
+          className="md:hidden text-ink-dim hover:text-ink transition-colors p-2 relative z-50"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle Menu"
+          aria-label="Toggle navigation menu"
         >
-          {isMobileMenuOpen ? <X size={30} /> : <Menu size={30} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu Fullscreen Overlay */}
-      <div 
-        className={`fixed inset-0 bg-brand-black/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-all duration-500 ${
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+      {/* Mobile Fullscreen Overlay */}
+      <div
+        className={`fixed inset-0 bg-deep/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-10 transition-all duration-500 ${
+          isMobileMenuOpen
+            ? 'opacity-100 visible pointer-events-auto'
+            : 'opacity-0 invisible pointer-events-none'
         }`}
       >
-        <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
-        
-        <div className="flex flex-col items-center gap-8 relative z-10">
+        <div className="flex flex-col items-center gap-8">
           {navLinks.map((link, idx) => (
-            <a 
-              key={link.label} 
+            <a
+              key={link.label}
               href={link.href}
-              className="font-orbitron text-3xl font-bold text-white hover:text-brand-magenta transition-colors"
-              style={{ transitionDelay: `${idx * 100}ms` }}
-              onClick={() => setIsMobileMenuOpen(false)}
+              className="font-display text-3xl font-black text-ink hover:text-gold transition-colors duration-200"
+              style={{ transitionDelay: `${idx * 60}ms` }}
+              onClick={closeMobileMenu}
             >
               {link.label}
             </a>
           ))}
-          <div className="w-16 h-1 bg-brand-magenta rounded-full mt-4"></div>
-          <p className="font-mono text-brand-gray text-sm mt-4">EST. 2024</p>
+          <div className="mt-2">
+            <Button href="#contact" variant="primary" onClick={closeMobileMenu}>
+              Contact
+            </Button>
+          </div>
         </div>
       </div>
     </nav>
